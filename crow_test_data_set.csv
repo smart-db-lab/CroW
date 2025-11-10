@@ -1,0 +1,103 @@
+﻿Name,Website,Category
+DisGeNET,https://www.disgenet.org/browser/0/1/0/C0002395/,Tabular
+NCBI Gene,https://www.ncbi.nlm.nih.gov/gene/64431,Tabular
+PathCard,https://pathcards.genecards.org/Search/Results?query=BRAF,Tabular
+GeneCards,https://www.genecards.org/cgi-bin/carddisp.pl?gene=A1CF,Non-Tabular
+UniProt,https://www.uniprot.org/uniprotkb/P15056/entry,Non-Tabular
+Ensembl,https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=ENSG00000139618,Non-Tabular
+PDB,https://www.rcsb.org/structure/1A1X,Tabular
+KEGG,https://www.kegg.jp/entry/hsa04151,Tabular
+Reactome,https://reactome.org/content/detail/R-HSA-1640170,Tabular
+STRING DB,https://string-db.org/network/9606.ENSP00000269305,Non-Tabular
+OMIM,https://www.omim.org/entry/190070,Non-Tabular
+dbSNP,https://www.ncbi.nlm.nih.gov/snp/rs121913411,Tabular
+ClinVar,https://www.ncbi.nlm.nih.gov/clinvar/variation/10754/,Tabular
+PubChem,https://pubchem.ncbi.nlm.nih.gov/compound/1983,Tabular
+PubMed,https://pubmed.ncbi.nlm.nih.gov/?term=CRISPR,Tabular
+UCSC Genome Browser,https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position=chr7:140733568-140783515,Non-Tabular
+FlyBase,https://flybase.org/reports/FBgn0003741.html,Tabular
+WormBase,https://wormbase.org/species/c_elegans/gene/WBGene00000904,Tabular
+MGI (Mouse),https://www.informatics.jax.org/marker/MGI:98357,Tabular
+ZFIN (Zebrafish),https://zfin.org/ZDB-GENE-980526-388,Tabular
+SGD (Yeast),https://www.yeastgenome.org/locus/S000004660,Tabular
+TAIR (Arabidopsis),https://www.arabidopsis.org/servlets/TairObject?type=locus&name=AT4G34005,Tabular
+GEO,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE183940,Tabular
+ArrayExpress,https://www.ebi.ac.uk/biostudies/arrayexpress/studies/E-MTAB-513,Tabular
+DrugBank,https://go.drugbank.com/drugs/DB00619,Tabular
+ChEMBL,https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1200669/,Tabular
+PANTHER DB,http://pantherdb.org/genes/gene.jsp?acc=HUMAN|HGNC=1100|UniProtKB=P38398,Tabular
+InterPro,https://www.ebi.ac.uk/interpro/entry/InterPro/IPR007087/,Tabular
+Pfam,https://www.ebi.ac.uk/interpro/protein/reviewed/P15056,Tabular
+PROSITE,https://prosite.expasy.org/PS50011,Non-Tabular
+Swiss-Model,https://swissmodel.expasy.org/repository/uniprot/P15056,Non-Tabular
+IntAct,https://www.ebi.ac.uk/intact/search?query=species_short:human,Tabular
+BioGRID,https://thebiogrid.org/113359/summary/homo-sapiens/tp53.html,Tabular
+Human Protein Atlas,https://www.proteinatlas.org/ENSG00000141510-TP53,Non-Tabular
+GenBank,https://www.ncbi.nlm.nih.gov/nuccore/NM_000546.6,Non-Tabular
+RefSeq,https://www.ncbi.nlm.nih.gov/nuccore/NC_000001.11,Tabular
+Orphanet,https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=84,Tabular
+PharmGKB,https://www.pharmgkb.org/gene/PA128,Non-Tabular
+TCGA Portal,https://portal.gdc.cancer.gov/projects/TCGA-BRCA,Tabular
+dbVar,https://www.ncbi.nlm.nih.gov/dbvar/studies/nstd186/,Tabular
+ClinGen,https://search.clinicalgenome.org/kb/genes/HGNC:11998,Tabular
+EcoCyc,https://ecocyc.org/gene?orgid=ECOLI&id=EG10527,Tabular
+BRENDA,https://www.brenda-enzymes.org/enzyme.php?ecno=1.1.1.1,Tabular
+Gene Ontology (GO),http://amigo.geneontology.org/amigo/term/GO:0005829,Tabular
+BioProject,https://www.ncbi.nlm.nih.gov/bioproject/PRJNA274351,Tabular
+BioSample,https://www.ncbi.nlm.nih.gov/biosample/SAMN03360662,Tabular
+SRA,https://www.ncbi.nlm.nih.gov/sra/SRX1102804[accn],Tabular
+DDBJ,https://getentry.ddbj.nig.ac.jp/getentry/na/AP006841,Non-Tabular
+ENA,https://www.ebi.ac.uk/ena/browser/view/A00001,Tabular
+HGNC,https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/HGNC:5,Tabular
+miRBase,https://www.mirbase.org/cgi-bin/mirna_entry.pl?acc=MI0000001,Tabular
+ExPASy,https://www.expasy.org/,Non-Tabular
+Wikipedia,https://en.wikipedia.org/wiki/Gene,Non-Tabular
+Walmart,https://www.walmart.com/shop/deals/flash-deals,Non-Tabular
+Amazon,https://www.amazon.com/s?k=test,Non-Tabular
+eBay,https://www.ebay.com/sch/i.html?_nkw=test,Non-Tabular
+GitHub,https://github.com/,Non-Tabular
+Stack Overflow,https://stackoverflow.com/questions,Non-Tabular
+IMDb,https://www.imdb.com/find/?q=test,Tabular
+Rotten Tomatoes,https://www.rottentomatoes.com/search?search=test,Non-Tabular
+Target,https://www.target.com/s?searchTerm=test,Non-Tabular
+RGD (Rat),https://rgd.mcw.edu/rgdweb/report/gene/main.html?id=2056,Tabular
+GenBank (Nucleotide),https://www.ncbi.nlm.nih.gov/nuccore/AY818001,Non-Tabular
+PIR,https://proteininformationresource.org/,Non-Tabular
+MalaCards,https://www.malacards.org/card/alzheimer_disease,Non-Tabular
+CTD,http://ctdbase.org/detail.go?type=gene&acc=207,Tabular
+DIP,https://dip.doe-mbi.ucla.edu/dip/Browse.cgi?PK=35,Tabular
+MINT (Interaction),https://mint.bio.uniroma2.it/index.php/results-by-query-gene-symbol-and-species/A1CF%20AND%20species:human,Tabular
+NCBI Taxonomy,https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=9606,Tabular
+GDB (Human Genome),https://gdb.org/HUG/search/Search?term=TP53,Tabular
+PROWL,http://prowl.rockefeller.edu/prowl/protein.html,Tabular
+DNASU,https://dnasu.org/DNASU/search/advancedSearch.jsp,Tabular
+Addgene,https://www.addgene.org/search/catalog/plasmids/?q=crispr,Tabular
+CGD (Candida),http://www.candidagenome.org/locus/CAL0000188300/overview,Tabular
+AlphaFold DB,https://alphafold.ebi.ac.uk/entry/P15056,Non-Tabular
+PDBsum,https://www.ebi.ac.uk/thornton-srv/databases/pdbsum/1a1x,Non-Tabular
+Saccharomyces Genome Res,https://www.SaccharomycesGenome.org/,Non-Tabular
+IMGT,https://www.imgt.org/genedb/GENElect?query=7.1+IGKV1-5&species=Homo+sapiens,Tabular
+EMBL,https://www.embl.org/,Non-Tabular
+EBI,https://www.ebi.ac.uk/,Non-Tabular
+Sanger Institute,https://www.sanger.ac.uk/,Non-Tabular
+Broad Institute,https://www.broadinstitute.org/data,Non-Tabular
+JAX Lab,https://www.jax.org/,Non-Tabular
+Cold Spring Harbor Lab,https://www.cshl.edu/,Non-Tabular
+Genomes OnLine Database,https://gold.jgi.doe.gov/index,Tabular
+Human Microbiome Project,https://www.hmpdacc.org/,Tabular
+Rfam,https://rfam.org/family/RF00001,Tabular
+Dfam,https://dfam.org/family/DF0000001/summary,Tabular
+GISAID,https://www.gisaid.org/,Tabular
+Nextstrain,https://nextstrain.org/ncov/open/global,Non-Tabular
+Pangolin,https://pangolin.cog-uk.io/,Tabular
+CoVariants,https://covariants.org/variants,Non-Tabular
+Zymo Research,https://www.zymoresearch.com/,Non-Tabular
+Qiagen,https://www.qiagen.com/us/shop/genes-and-pathways/gene-name/A1CF,Tabular
+Thermo Fisher,https://www.thermofisher.com/us/en/home/life-science/cloning/gene-synthesis/geneart-gene-synthesis.html,Non-Tabular
+NEB (New England Biolabs),https://www.neb.com/en-us/products/m0491-taq-dna-polymerase-with-standard-taq-buffer,Non-Tabular
+Promega,https://www.promega.com/products/pcr/taq-dna-polymerase-buffers-and-nucleotides/go-taq-g2-dna-polymerase/,Non-Tabular
+Bio-Rad,https://www.bio-rad.com/en-us/sku/1708870-itaq-universal-sybr-green-supermix,Non-Tabular
+Illumina,https://www.illumina.com/systems/sequencing-platforms/novaseq.html,Non-Tabular
+Oxford Nanopore,https://nanoporetech.com/products/minion,Non-Tabular
+PacBio,https://www.pacb.com/revio/,Non-Tabular
+10x Genomics,https://www.10xgenomics.com/products/single-cell-gene-expression,Non-Tabular
