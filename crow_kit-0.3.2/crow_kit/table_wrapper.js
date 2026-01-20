@@ -16,11 +16,11 @@ var basePanelTemplate = `
 		<div class="st-panel-header"><i class="fa fa-bars" aria-hidden="true"></i> Wrapper Generation Panel - <b>Table</b></div>
 		<div class="st-panel-contents" style="text-align:center;">
 			
-                        <button style="background-color: #dc3545 !important;margin-top:5px;" id="st_click" class="st_click" class="doneBtn" >Select Table</button>
+                        <button style="background-color: #dc3545 !important;margin-top:5px;" id="st_click" class="st_click"  >Select Table</button>
                         
                         <br><br>
 
-                        <button  style="background-color: #dc3545 !important;margin-top:5px;" id="snp_click" class="snp_click" class="doneBtn" >Select Next Page</button>
+                        <button  style="background-color: #dc3545 !important;margin-top:5px;" id="snp_click" class="snp_click"  >Select Next Page</button>
 
                         <br>
 		</div>

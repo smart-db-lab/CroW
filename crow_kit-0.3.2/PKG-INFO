@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: crow-kit
-Version: 0.3.1
+Version: 0.3.2
 Summary: Crow Kit: workflow and tooling utilities
 Author: Kallol Naha
 License-Expression: MIT
@@ -9,6 +9,7 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: selenium>=4.10
 Requires-Dist: webdriver-manager>=4.0
+Requires-Dist: playwright>=1.41.0
 Requires-Dist: beautifulsoup4>=4.12
 Requires-Dist: lxml>=5.0
 Dynamic: license-file

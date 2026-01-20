@@ -30,7 +30,7 @@ var basePanelTemplate = `
 
 
                     <button style="background-color: #dc3545 !important;margin-top:5px;float: right !important;margin-left: 5px !important;"  id="spb_click" class="spb_click" >Select Parent Block</button>
-                    <button style="background-color: #5bc0de !important;margin-top:5px;float: right !important;"  id="snp_click" class="snp_click" >Select Next Page</button>
+                    <button style="background-color: #5bc0de !important;margin-top:5px;float: right !important;"  id="snp_click snp_click_right" class="snp_click" >Select Next Page</button>
 
                     
                     <div style="clear:both;"></div>

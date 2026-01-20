@@ -147,6 +147,26 @@ div.st-panel {
     float: right !important; /* Keep original float logic */
 }
 
+.snp_click {
+    color: white !important;
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    border-radius: 4px !important;
+    
+}
+.snp_click_right {
+    float: right !important; /* Keep original float logic */
+}
+
+.st_click{
+    color: white !important;
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    border-radius: 4px !important;
+}
+
 /* Done Button */
 .st-actionContainer .grid {
     text-align: center;

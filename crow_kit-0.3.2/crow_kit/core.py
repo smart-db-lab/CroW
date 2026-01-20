@@ -7,7 +7,6 @@ from selenium.webdriver.chrome.service import Service as BraveService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.os_manager import ChromeType
 from selenium.webdriver.chrome.service import Service
-from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -17,12 +16,22 @@ import json
 import uuid
 import time
 from selenium.common.exceptions import TimeoutException
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
+
 
 module_dir = os.path.dirname(__file__)
 inner_dir = os.path.join(module_dir, "crow_kit_data", "wrappers")  # inside package
 os.makedirs(inner_dir, exist_ok=True)
 
+def _clean_class_token(s: str) -> str:
+    return (s or "").replace(".", " ").strip()
 
+
+def _wait_ajax_settle(page, timeout_ms=30000):
+    try:
+        page.wait_for_load_state("networkidle", timeout=timeout_ms)
+    except PlaywrightTimeoutError:
+        pass
 
 def setTableWrapper(url, wrapper_name='no_name'):
     try:
@@ -214,150 +223,213 @@ def getWrapperData(wrapper_name, maximum_data_count=100, url=''):
     return True, all_tables
 
 
-def getTableWrapperData(url,base_path, maximum_data_count, next_path):
+def getTableWrapperData(url, base_path, maximum_data_count, next_path):
+
     all_tables = []
+
     try:
-        service = Service(executable_path=ChromeDriverManager().install())
-        options = webdriver.ChromeOptions()
-        options.add_argument("start-maximized")
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        options.add_experimental_option('useAutomationExtension', False)
-        options.add_argument('--disable-blink-features=AutomationControlled')
-        options.add_argument("--headless")
-        
-        options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
-        driver = webdriver.Chrome(service=service, options=options)
-        driver.maximize_window()
-        driver.get(url)
-        
-        prev_tables = []
-        while(1):
-            current_tables = []
-            xhtml = driver.find_element(By.XPATH, base_path)
-            xhtml = xhtml.get_attribute('outerHTML')
-            soup = BeautifulSoup(xhtml, "html.parser")
-            top_level_tables = soup.find_all(is_top_level_table)
-            for table in top_level_tables:
-                all_tables_data = extract_table_data(table)
-                current_tables.extend(all_tables_data)
-            
-            if(prev_tables != current_tables):
-                all_tables.extend(current_tables)
-                prev_tables = []
-                prev_tables = current_tables.copy() 
-            else:
-                break
-            
-            if(next_path == ''):
-                break
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=True,
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--start-maximized",
+                ],
+            )
 
-            if len(all_tables) >= maximum_data_count:
-                break
+            context = browser.new_context(
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36",
+                viewport={"width": 1920, "height": 1080},
+            )
+            page = context.new_page()
 
-            anchor_xpath = next_path
-            driver.implicitly_wait(5)
-            anchor_element = driver.find_element(By.XPATH,anchor_xpath)
-            driver.execute_script("arguments[0].click();", anchor_element)
-            time.sleep(5)
-        
-        driver.close()
-        
-    except Exception as error:
-        pass
-        #print(error)
+            page.goto(url, wait_until="domcontentloaded", timeout=60000)
            
+            try:
+                page.wait_for_load_state("networkidle", timeout=30000)
+            except PlaywrightTimeoutError:
+                pass
+
+            prev_tables = []
+
+            while True:
+                current_tables = []
+
+               
+                base_locator = page.locator(f"xpath={base_path}").first
+                base_locator.wait_for(state="attached", timeout=30000)
+
+                xhtml = base_locator.evaluate("el => el.outerHTML")
+
+                soup = BeautifulSoup(xhtml, "html.parser")
+                top_level_tables = soup.find_all(is_top_level_table)
+
+                for table in top_level_tables:
+                    all_tables_data = extract_table_data(table)
+                    current_tables.extend(all_tables_data)
+
+                
+                if prev_tables != current_tables:
+                    all_tables.extend(current_tables)
+                    prev_tables = current_tables.copy()
+                else:
+                    break
+
+                
+                if not next_path:
+                    break
+
+                
+                if len(all_tables) >= maximum_data_count:
+                    break
+
+                
+                next_locator = page.locator(f"xpath={next_path}").first
+
+                
+                try:
+                    next_locator.wait_for(state="visible", timeout=15000)
+                except PlaywrightTimeoutError:
+                    break
+
+              
+                with page.expect_navigation(wait_until="domcontentloaded", timeout=15000) if False else nullcontext():
+                    next_locator.click()
+
+                try:
+                    page.wait_for_load_state("networkidle", timeout=30000)
+                except PlaywrightTimeoutError:
+                    # fallback: give a moment for DOM to update
+                    time.sleep(2)
+
+            context.close()
+            browser.close()
+
+    except Exception:
+        pass
+
     return filter_duplicate_rows(all_tables)
 
 def getGeneralWrapperData(url, base_path, maximum_data_count, next_path, parent_path, repeat):
+
     all_tables = []
+
     try:
-        service = Service(executable_path=ChromeDriverManager().install())
-        options = webdriver.ChromeOptions()
-        options.add_argument("start-maximized")
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        options.add_experimental_option('useAutomationExtension', False)
-        options.add_argument('--disable-blink-features=AutomationControlled')
-        options.add_argument("--headless")
-        options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
-        driver = webdriver.Chrome(service=service, options=options)
-        driver.maximize_window()
-        driver.get(url)
-        driver.implicitly_wait(20)
-        if(repeat == 'yes'):
-            list_header = []
-            list_header_try = 0
-            while(1):
-                data_rows = []
-                root_path = '.publication'
-                for p in base_path:
-                    if list_header_try == 0:
-                        list_header.append(p['attribute_name'])
-                    xpath_root = parent_path
-                    xpath_root = xpath_root.replace('.', ' ')
-                    xpath_root = xpath_root.strip()
-                    xpath_sub = p['attribute_value']
-                    xpath_sub = xpath_sub.replace('.', ' ')
-                    xpath_sub = xpath_sub.strip()
-                    path = "//*[@class='"+xpath_root+"']//*[@class='"+xpath_sub+"']"
-                    elements = driver.find_elements(By.XPATH, path)
-                    row_columns = []
-                    for element in elements:
-                        xhtml = element.get_attribute('outerHTML')
-                        soup = BeautifulSoup(xhtml, "html.parser")
-                        row_columns.append(soup.get_text(strip=True))
-                    data_rows.append(row_columns)
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=True,
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--start-maximized",
+                ],
+            )
+
+            context = browser.new_context(
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36",
+                viewport={"width": 1920, "height": 1080},
+            )
+            page = context.new_page()
+
+            page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            _wait_ajax_settle(page)
+
+            if repeat == "yes":
+                list_header = []
+                list_header_try = 0
+
+                while True:
+                    data_rows = []
+
+                    for pitem in base_path:
+                        if list_header_try == 0:
+                            list_header.append(pitem["attribute_name"])
+
+                        xpath_root = _clean_class_token(parent_path)
+                        xpath_sub = _clean_class_token(pitem["attribute_value"])
+
                 
-                all_tables = all_tables + [list(pair) for pair in zip(*data_rows)]
+                        path = f"//*[@class='{xpath_root}']//*[@class='{xpath_sub}']"
 
-                list_header_try = list_header_try + 1
+                        elements = page.locator(f"xpath={path}")
+                        count = elements.count()
 
-                if(next_path == ''):
-                    break
+                        row_columns = []
+                        for i in range(count):
+                            el = elements.nth(i)
+                            xhtml = el.evaluate("e => e.outerHTML")
+                            soup = BeautifulSoup(xhtml, "html.parser")
+                            row_columns.append(soup.get_text(strip=True))
 
-                if len(all_tables) >= maximum_data_count:
-                    break
+                        data_rows.append(row_columns)
 
-                anchor_xpath = next_path
-                anchor_element = driver.find_element(By.XPATH,anchor_xpath)
-                driver.execute_script("arguments[0].click();", anchor_element)
-                time.sleep(3)
-            
-            all_tables.insert(0, list_header)      
-        else:
-            list_header_try = 0
-            list_header = []
-            while(1):
-                data_rows = []
-                for p in base_path:
-                    if list_header_try == 0:
-                        list_header.append(p['attribute_name'])
-                    app_path = p['attribute_value']
-                    xhtml = driver.find_element(By.XPATH, app_path)
-                    xhtml = xhtml.get_attribute('outerHTML')
-                    soup = BeautifulSoup(xhtml, "html.parser")
-                    data_rows.append(soup.get_text(strip=True))
-                all_tables.append(data_rows)
+                    
+                    all_tables += [list(pair) for pair in zip(*data_rows)]
 
-                list_header_try = list_header_try + 1
+                    list_header_try += 1
 
-                if(next_path == ''):
-                    break
-                
-                if len(all_tables) >= maximum_data_count:
-                    break
-                
-                anchor_xpath = next_path
-                anchor_element = driver.find_element(By.XPATH,anchor_xpath)
-                driver.execute_script("arguments[0].click();", anchor_element)
-                time.sleep(3)
+                    if not next_path:
+                        break
+                    if len(all_tables) >= maximum_data_count:
+                        break
 
-            all_tables.insert(0, list_header)    
-    except Exception as error:
-        pass
-        #print(error)
+                    next_btn = page.locator(f"xpath={next_path}").first
+                    try:
+                        next_btn.wait_for(state="visible", timeout=15000)
+                    except PlaywrightTimeoutError:
+                        break
+
            
+                    next_btn.click()
+                    _wait_ajax_settle(page, timeout_ms=30000)
+                    time.sleep(1)
+
+                all_tables.insert(0, list_header)
+
+            else:
+                list_header = []
+                list_header_try = 0
+
+                while True:
+                    data_rows = []
+
+                    for pitem in base_path:
+                        if list_header_try == 0:
+                            list_header.append(pitem["attribute_name"])
+
+                        app_path = pitem["attribute_value"]  # already an XPath in your code
+                        el = page.locator(f"xpath={app_path}").first
+                        el.wait_for(state="attached", timeout=20000)
+
+                        xhtml = el.evaluate("e => e.outerHTML")
+                        soup = BeautifulSoup(xhtml, "html.parser")
+                        data_rows.append(soup.get_text(strip=True))
+
+                    all_tables.append(data_rows)
+                    list_header_try += 1
+
+                    if not next_path:
+                        break
+                    if len(all_tables) >= maximum_data_count:
+                        break
+
+                    next_btn = page.locator(f"xpath={next_path}").first
+                    try:
+                        next_btn.wait_for(state="visible", timeout=15000)
+                    except PlaywrightTimeoutError:
+                        break
+
+                    next_btn.click()
+                    _wait_ajax_settle(page, timeout_ms=30000)
+                    time.sleep(1)
+
+                all_tables.insert(0, list_header)
+
+            context.close()
+            browser.close()
+
+    except Exception:
+        pass
+
     return filter_duplicate_rows(all_tables)
 
 
