@@ -6,8 +6,8 @@ This repository contains the CroW system artifacts, including the **CroW-Kit** P
 
 ## Repository Contents
 
-* **`crow_kit-0.3.1/`**
-  Source and packaging files for the **CroW-Kit** Python distribution (v0.3.1).
+* **`crow_kit-0.3.2/`**
+  Source and packaging files for the **CroW-Kit** Python distribution (v0.3.2).
 
 * **`flask_demo/`**
   A sample Flask project that demonstrates CroW-Kit’s main actions (create wrappers, list wrappers, execute wrappers) via localhost endpoints.
@@ -63,7 +63,7 @@ Then open:
 If you want to install CroW-Kit from the local source folder:
 
 ```bash
-pip install -e ./crow_kit-0.3.1
+pip install -e ./crow_kit-0.3.2
 ```
 
 ---
